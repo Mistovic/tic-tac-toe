@@ -1,0 +1,147 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+:root {
+  --cel-size: 100px;
+  --mark-size: calc(var(--cel-size) * 0.9);
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.board {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: repeat(3, auto);
+}
+
+/* Board */
+
+.field {
+  width: var(--cel-size);
+  height: var(--cel-size);
+  background-color: white;
+  border: 1px solid black;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.field:first-child,
+.field:nth-child(2),
+.field:nth-child(3) {
+  border-top: none;
+}
+
+.field:nth-child(3n + 1) {
+  border-left: none;
+}
+.field:nth-child(3n + 3) {
+  border-right: none;
+}
+
+.field:last-child,
+.field:nth-child(7),
+.field:nth-child(8) {
+  border-bottom: none;
+}
+
+.field.x::after,
+.field.field.x::before {
+  background-color: black;
+}
+.board.x .field:not(.x):not(.o):hover::before,
+.board.x .field:not(.x):not(.o):hover::after,
+.board.o .field:not(.x):not(.o):hover::before {
+  background-color: lightgray;
+}
+.board.o .field:not(.x):not(.o):hover::after {
+  background-color: white;
+}
+.field.x::after,
+.field.field.x::before,
+.board.x .field:not(.x):not(.o):hover::before,
+.board.x .field:not(.x):not(.o):hover::after {
+  content: "";
+  position: absolute;
+  width: calc(var(--mark-size) * 0.15);
+  height: var(--mark-size);
+}
+.field {
+  cursor: pointer;
+}
+.field.x,
+.field.o {
+  cursor: not-allowed;
+}
+
+.field.field.x::before,
+.board.x .field:not(.x):not(.o):hover::before {
+  transform: rotate(45deg);
+}
+.field.field.x::after,
+.board.x .field:not(.x):not(.o):hover::after {
+  transform: rotate(-45deg);
+}
+
+// Za krug
+.field.field.o::after {
+  background-color: white;
+}
+.field.field.o::before {
+  background-color: black;
+}
+.field.o::after,
+.field.field.o::before,
+.board.o .field:not(.x):not(.o):hover::before,
+.board.o .field:not(.x):not(.o):hover::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.field.field.o::before,
+.board.o .field:not(.x):not(.o):hover::before {
+  width: var(--mark-size);
+  height: var(--mark-size);
+}
+.field.field.o::after,
+.board.o .field:not(.x):not(.o):hover::after {
+  width: calc(var(--mark-size) * 0.7);
+  height: calc(var(--mark-size) * 0.7);
+}
+
+#winner-message {
+  color: white;
+  position: fixed;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  h2 {
+    font-size: 2em;
+    color: white;
+  }
+}
+#restart-btn {
+  font-size: 3rem;
+  padding: 0.25em 0.5em;
+}
+#winner-message.show {
+  display: flex;
+}
